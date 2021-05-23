@@ -1,0 +1,35 @@
+---
+title: "RPCA"
+author: "Yun Du"
+date: "5/23/2021"
+output: html_document
+---
+
+
+
+Code to generate RPCA
+Input dataset is feature table with raw count (`raw_feature_table.qza`). Output datasets are ordination file (`ordination.qza`) and distance metrics (`distance.qza`).
+
+```{bash}
+qiime deicode rpca \
+    --i-table raw_feature_table.qza \ 
+    --p-min-feature-count 0 \ 
+    --p-min-sample-count 6500 \ 
+    --o-biplot ordination.qza \ 
+--o-distance-matrix distance.qza 
+
+```
+
+Code to generate biplot
+Input datasets are ordination file (`ordination.qza`), metadata file (`metadata.tsv`) and taxonomic file (`taxa.tsv`). Output file is qzv file (`biplot_DEICODE.qzv`) which can be visualized in EMPEROR.
+
+```{bash}
+qiime emperor biplot \
+--i-biplot ordination.qza \
+--m-sample-metadata-file metadata.tsv \
+--m-feature-metadata-file taxa.tsv \
+--o-visualization biplot_DEICODE.qzv \
+--p-number-of-features 8
+
+```
+
